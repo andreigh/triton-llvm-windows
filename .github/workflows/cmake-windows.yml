@@ -22,13 +22,21 @@ jobs:
     steps:
     - uses: actions/checkout@v3
 
+    - name: Dir folder
+      run: dir ${{github.workspace}}
+
+    - name: Dir folder 2
+      run: dir ${{github.workspace}}\llvm-project\
+
+    - name: Dir folder 3
+      run: dir ${{github.workspace}}\llvm-project\llvm
+
     - name: Configure CMake
       # Configure CMake in a 'build' subdirectory. `CMAKE_BUILD_TYPE` is only required if you are using a single-configuration generator such as make.
       # See https://cmake.org/cmake/help/latest/variable/CMAKE_BUILD_TYPE.html?highlight=cmake_build_type
-      run: dir ${{github.workspace}}
-      # cmake -S llvm-project\llvm -B llvm-project\llvm\build -G Ninja -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}} "-DLLVM_ENABLE_PROJECTS=clang;mlir" -DLLVM_INSTALL_UTILS=ON -DLLVM_INCLUDE_TESTS=OFF "-DLLVM_TARGETS_TO_BUILD=NVPTX;AMDGPU"
+      run: cmake -S ${{github.workspace}}\llvm-project\llvm -B ${{github.workspace}}\llvm-project\llvm\build -G Ninja -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}} "-DLLVM_ENABLE_PROJECTS=clang;mlir" -DLLVM_INSTALL_UTILS=ON -DLLVM_INCLUDE_TESTS=OFF "-DLLVM_TARGETS_TO_BUILD=NVPTX;AMDGPU"
 
     - name: Build LLVM
       # Build your program with the given configuration
-      run: cmake --build ${{github.workspace}}\llvm-project\llvm\build --config ${{env.BUILD_TYPE}}
+      run: # cmake --build ${{github.workspace}}\llvm-project\llvm\build --config ${{env.BUILD_TYPE}}
 
