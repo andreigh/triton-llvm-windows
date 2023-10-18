@@ -20,15 +20,23 @@ jobs:
     runs-on: windows-2019
 
     steps:
-    - uses: actions/checkout@v3
-
     - name: Checkout
-      uses: actions/checkout@v2
+      uses: actions/checkout@v3
 
     - name: Checkout submodules
       run: |
         git submodule update --init --recursive
 
+    - name: Install ninja-build tool
+      # You may pin to the exact commit or the version.
+      # uses: seanmiddleditch/gha-setup-ninja@8b297075da4cd2a5f1fd21fe011b499edf06e9d2
+      uses: seanmiddleditch/gha-setup-ninja@v4
+      with:
+        # Version of ninja-build to install
+        version: 1.11.1
+        # Override default platform with one of [win, mac, linux]
+        platform: win
+    
     - name: Configure CMake
       # Configure CMake in a 'build' subdirectory. `CMAKE_BUILD_TYPE` is only required if you are using a single-configuration generator such as make.
       # See https://cmake.org/cmake/help/latest/variable/CMAKE_BUILD_TYPE.html?highlight=cmake_build_type
